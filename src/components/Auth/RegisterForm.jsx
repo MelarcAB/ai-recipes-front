@@ -2,40 +2,43 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const LoginForm = () => {
+const RegisterForm = () => {
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const { VITE_BACKEND_URL: backendURL } = import.meta.env;
 
+    const registerUser = async (userDetails) => {
+        const response = await fetch(backendURL + "/register", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(userDetails)
+        });
+
+        return response.json();
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-
-        // Mostrar un toast con mensaje "Cargando..." y guardar su referencia
-        const toastId = toast("Cargando...", { autoClose: false });
+        const toastId = toast("Registrando...", { autoClose: false });
 
         try {
-            const response = await fetch(backendURL + "/login", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email, password })
-            });
-
-            // Cerrar el toast "Cargando..."
+            const data = await registerUser({ name, email, password });
+            console.log(data);
             toast.dismiss(toastId);
 
-            const data = await response.json();
-
-            if (data.token) {
-                toast.success('Inicio de sesión exitoso.');
-                localStorage.setItem('token', data.token);
-                localStorage.setItem('user', JSON.stringify(data.user));
+            if (data.success) {
+                toast.success('Registro exitoso. Por favor inicia sesión.');
             } else {
-                toast.error(data.message);
+                toast.error(data.message || 'Error al registrar.');
             }
 
         } catch (error) {
+            toast.dismiss(toastId);
+            console.log(error);
+
             toast.error('Hubo un problema al intentar conectar con el servidor.');
         }
     };
@@ -45,11 +48,17 @@ const LoginForm = () => {
             <div className="w-full max-w-xs">
                 <div className="text-center mb-6">
                     <h2 className="text-2xl font-bold text-blue-600">
-                        Bienvenido
+                        Regístrate
                     </h2>
-                    <p className="text-gray-600">Inicia sesión para generar recetas</p>
+                    <p className="text-gray-600">Crea una cuenta para generar recetas</p>
                 </div>
                 <form className="bg-white rounded-lg shadow-md p-4" onSubmit={handleSubmit}>
+                    <div className="mb-3">
+                        <label className="block text-gray-700 text-sm font-medium mb-1" htmlFor="name">
+                            Nombre
+                        </label>
+                        <input className="w-full p-2 border rounded-md transition duration-200 focus:border-blue-500 focus:shadow-outline" id="name" type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Tu nombre" required />
+                    </div>
                     <div className="mb-3">
                         <label className="block text-gray-700 text-sm font-medium mb-1" htmlFor="email">
                             Email
@@ -64,7 +73,7 @@ const LoginForm = () => {
                     </div>
                     <div className="mt-2">
                         <button className="w-full bg-blue-500 text-white font-medium py-2 px-4 rounded-md hover:bg-blue-600 active:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 transition duration-200" type="submit">
-                            Iniciar sesión
+                            Registrarse
                         </button>
                     </div>
                 </form>
@@ -73,4 +82,4 @@ const LoginForm = () => {
     );
 };
 
-export default LoginForm;
+export default RegisterForm;

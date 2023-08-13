@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Link } from 'react-router-dom'; // Asegúrate de importar Link si usas react-router
+import { Link } from 'react-router-dom'; 
 import { useNavigate } from 'react-router-dom';
 const LoginForm = ({ setForceUpdate }) => {
     const [email, setEmail] = useState('');
@@ -17,7 +17,6 @@ const LoginForm = ({ setForceUpdate }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // Mostrar un toast con mensaje "Cargando..." y guardar su referencia
         const toastId = toast("Cargando...", { autoClose: false });
 
         try {
@@ -30,7 +29,6 @@ const LoginForm = ({ setForceUpdate }) => {
                 body: JSON.stringify({ email, password })
             });
 
-            // Cerrar el toast "Cargando..."
             toast.dismiss(toastId);
 
             const data = await response.json();

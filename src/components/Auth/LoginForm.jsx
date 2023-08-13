@@ -39,6 +39,7 @@ const LoginForm = ({ setForceUpdate }) => {
                 toast.success('Inicio de sesión exitoso.');
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('user', JSON.stringify(data.user));
+                localStorage.setItem('open_ai_token', JSON.stringify(data.open_ai_token));
                 //go to home
                 navigation('/home');
 

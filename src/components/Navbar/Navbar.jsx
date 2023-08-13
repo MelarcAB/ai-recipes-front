@@ -25,7 +25,7 @@ const Navbar = () => {
     const { VITE_APP_NAME: appName } = import.meta.env;
     const title_color = "white";
     return (
-        <nav className="bg-slate-500 h-14 w-screen fixed top-0 left-0 flex justify-between items-center px-4">
+        <nav className="bg-indigo-600 text-white h-14 w-screen fixed top-0 left-0 flex justify-between items-center px-4">
             <Link to="/" className="flex items-center space-x-2">
                 <RestaurantMenu className="text-2xl text-white" />
                 <span className='text-2xl text-white font-poppins'>{appName}</span>

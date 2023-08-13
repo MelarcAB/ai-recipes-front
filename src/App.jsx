@@ -20,6 +20,7 @@ export default function App() {
       <div className="App mt-10">
         <Routes>
           <Route path="/" element={<LoginForm />} />
+          <Route path="/login" element={<LoginForm />} />
           <Route path="/register" element={<RegisterForm />} />
         </Routes>
       </div>

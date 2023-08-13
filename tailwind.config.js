@@ -10,6 +10,8 @@ export default {
         'press-start': ['"Press Start 2P"', 'cursive'],
         'roboto': ['"Roboto"', 'sans-serif', 'ui-sans-serif', 'system-ui'],
         'poppins': ['"Poppins"'],
+        'sans': ['Inter', 'ui-sans-serif', 'system-ui']
+
       },
     },
   },

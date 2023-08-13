@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Link } from 'react-router-dom'; // Asegúrate de importar Link si usas react-router
-
-const LoginForm = () => {
+import { useNavigate } from 'react-router-dom';
+const LoginForm = ({ setForceUpdate }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const { VITE_BACKEND_URL: backendURL } = import.meta.env;
+    const navigation = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -33,11 +34,15 @@ const LoginForm = () => {
                 toast.success('Inicio de sesión exitoso.');
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('user', JSON.stringify(data.user));
+                navigation('/home');
+
             } else {
                 toast.error(data.message);
             }
 
         } catch (error) {
+            toast.dismiss(toastId);
+
             toast.error('Hubo un problema al intentar conectar con el servidor.');
         }
     };

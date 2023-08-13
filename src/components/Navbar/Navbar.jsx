@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { RestaurantMenu, Person, Build, Logout } from '@mui/icons-material';
-
-import useAuth from '../../hooks/useAuth';
+import useAuth from '../../hooks/useAuth'; // Asegúrate de que el import sea correcto
 
 const Navbar = () => {
     const { VITE_APP_NAME: appName } = import.meta.env;
     const { isAuthenticated, user } = useAuth();
     const [showMenu, setShowMenu] = useState(false);
 
-    const handleLogout = () => {
+    const handleLogoutClick = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
         window.location.reload();
@@ -19,7 +18,7 @@ const Navbar = () => {
         <nav className="bg-indigo-600 text-white h-14 w-screen fixed top-0 left-0 flex justify-between items-center px-4 shadow-md">
             <Link to="/" className="flex items-center space-x-2">
                 <RestaurantMenu className="text-2xl text-white" />
-                <span className='text-2xl text-white font-poppins'>{appName}</span>
+                <span className='text-2xl text-white font-Inter'>{appName}</span>
             </Link>
 
             <div className="flex items-center space-x-4">
@@ -37,14 +36,13 @@ const Navbar = () => {
                                         Configuración
                                     </span>
                                 </Link>
-                                <button onClick={handleLogout} className="flex items-center justify-between px-4 py-2 text-sm text-gray-700 hover:bg-indigo-500 hover:text-white w-full">
+                                <button onClick={handleLogoutClick} className="flex items-center justify-between px-4 py-2 text-sm text-gray-700 hover:bg-indigo-500 hover:text-white w-full">
                                     <span className="flex items-center">
                                         <Logout className="mr-2" />
                                         Logout
                                     </span>
                                 </button>
                             </div>
-
                         )}
                     </div>
                 ) : (

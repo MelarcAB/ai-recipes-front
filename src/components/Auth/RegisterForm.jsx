@@ -49,7 +49,7 @@ const RegisterForm = () => {
     };
 
     return (
-        <div className="h-full flex items-center justify-center bg-gray-100 pt-24">
+        <div className="h-full flex items-center justify-center  pt-24">
             <div className="w-full max-w-xs">
                 <div className="text-center mb-6">
                     <h2 className="text-2xl font-bold text-indigo-600">

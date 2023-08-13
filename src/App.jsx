@@ -11,6 +11,7 @@ import 'typeface-inter';
 import useAuth from './hooks/useAuth';
 import { Navigate, Route } from 'react-router';
 import { AuthProvider } from './context/authContext';
+import SettingsPage from './assets/views/SettingsPage';
 
 export default function App() {
   const [forceUpdate, setForceUpdate] = useState(false);
@@ -38,6 +39,9 @@ export default function App() {
             } />
             <Route path="/home" element={<PrivateRoute />}>
               <Route index element={<HomePage />} />
+            </Route>
+            <Route path="/settings" element={<PrivateRoute />}>
+              <Route index element={<SettingsPage />} />
             </Route>
             <Route path="/" element={<RedirectBasedOnAuth />} />
           </Routes>

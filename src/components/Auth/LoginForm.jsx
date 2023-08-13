@@ -9,6 +9,11 @@ const LoginForm = ({ setForceUpdate }) => {
     const { VITE_BACKEND_URL: backendURL } = import.meta.env;
     const navigation = useNavigate();
 
+    //si user esta logeado, redirigir a home
+    if (localStorage.getItem('token')) {
+        navigation('/home');
+    }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -34,6 +39,7 @@ const LoginForm = ({ setForceUpdate }) => {
                 toast.success('Inicio de sesión exitoso.');
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('user', JSON.stringify(data.user));
+                //go to home
                 navigation('/home');
 
             } else {

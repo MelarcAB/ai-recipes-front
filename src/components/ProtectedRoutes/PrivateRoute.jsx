@@ -1,16 +1,17 @@
-// PrivateRoute.jsx
-import { Navigate, Route } from 'react-router-dom';
+import { Navigate, Outlet } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 
-function PrivateRoute({ children }) {
-    const { isAuthenticated } = useAuth();
-    console.log("Is authenticated?", isAuthenticated);
-
-    if (!isAuthenticated) {
-        return <Navigate replace to="/login" />;
+function PrivateRoute() {
+    const { isAuthenticated, loading } = useAuth();
+    if (loading) {
+        return null;
     }
-
-    return children;
+    if (!isAuthenticated) {
+        console.log('No autenticado');
+        return <Navigate to="/login" replace />;
+    }
+    return <Outlet />;
 }
+
 
 export default PrivateRoute;

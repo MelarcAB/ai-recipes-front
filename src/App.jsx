@@ -31,17 +31,15 @@ export default function App() {
         <div className="App mt-10">
           <Routes>
             <Route path="/login" element={
-              <LoginForm setForceUpdate={setForceUpdate} />  // Pasamos una función para forzar el update
+              <LoginForm setForceUpdate={setForceUpdate} />
             } />
             <Route path="/register" element={
               <RegisterForm />
             } />
-            <Route path="/home" element={
-              <PrivateRoute>
-                <HomePage />
-              </PrivateRoute>
-            } />
-            <Route path="/" element={<RedirectBasedOnAuth />} />  // Nuevo componente para manejar la redirección
+            <Route path="/home" element={<PrivateRoute />}>
+              <Route index element={<HomePage />} />
+            </Route>
+            <Route path="/" element={<RedirectBasedOnAuth />} />
           </Routes>
         </div>
       </AuthProvider>

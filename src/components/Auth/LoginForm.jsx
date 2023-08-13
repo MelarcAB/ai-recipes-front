@@ -19,6 +19,7 @@ const LoginForm = () => {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Accept': 'application/json'
                 },
                 body: JSON.stringify({ email, password })
             });
@@ -28,7 +29,7 @@ const LoginForm = () => {
 
             const data = await response.json();
 
-            if (data.token) {
+            if (data.user) {
                 toast.success('Inicio de sesión exitoso.');
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('user', JSON.stringify(data.user));

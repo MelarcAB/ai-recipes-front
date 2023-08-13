@@ -1,19 +1,23 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Link } from 'react-router-dom'; // Asegúrate de importar Link si usas react-router
+import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
 const RegisterForm = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const { VITE_BACKEND_URL: backendURL } = import.meta.env;
+    const navigation = useNavigate();
+
 
     const registerUser = async (userDetails) => {
-        console.log(userDetails);
         const response = await fetch(backendURL + "/register", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'Accept': 'application/json'
             },
             body: JSON.stringify(userDetails)
         });
@@ -31,13 +35,15 @@ const RegisterForm = () => {
 
             if (data.user) {
                 toast.success('Registro exitoso. Por favor inicia sesión.');
+                navigation('/login');
+
+
             } else {
-                toast.error(data.error || 'Error al registrar.');
+                toast.error(data.message);
             }
 
         } catch (error) {
             toast.dismiss(toastId);
-            console.log(error);
 
         }
     };

@@ -12,8 +12,7 @@ import { ToastContainer } from 'react-toastify';
 
 export default function App() {
   return (
-    <Router>
-
+    <>
       <Navbar />
       <ToastContainer />
 
@@ -24,6 +23,6 @@ export default function App() {
           <Route path="/register" element={<RegisterForm />} />
         </Routes>
       </div>
-    </Router>
+    </>
   );
 }

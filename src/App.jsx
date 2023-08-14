@@ -13,6 +13,7 @@ import { Navigate, Route } from 'react-router';
 import { AuthProvider } from './context/AuthContext';
 import SettingsPage from './assets/views/SettingsPage';
 import CreatePage from './assets/views/CreatePage';
+import RecipesPage from './assets/views/RecipesPage';
 
 export default function App() {
   const [forceUpdate, setForceUpdate] = useState(false);
@@ -46,6 +47,9 @@ export default function App() {
             </Route>
             <Route path="/create-recipe" element={<PrivateRoute />}>
               <Route index element={<CreatePage />} />
+            </Route>
+            <Route path="/view-recipes" element={<PrivateRoute />}>
+              <Route index element={<RecipesPage />} />
             </Route>
             <Route path="/" element={<RedirectBasedOnAuth />} />
           </Routes>

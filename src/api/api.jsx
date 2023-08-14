@@ -57,7 +57,59 @@ const getRecipes = async () => {
 
 }
 
+const getRecipe = async (slug) => {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+        throw new Error("No token found in localStorage");
+    }
+
+    //get a /ingredients/:slug
+    const response = await fetch(`${BACKEND_URL}/recipes/${slug}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+    });
+
+    const data = await response.json();
+
+    if (!data.data) {
+        return false;
+    }
+
+    return data;
+}
+
+
+const generateRecipe = async (ingredients_list) => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+        throw new Error("No token found in localStorage");
+    }
+    const ingredients = ingredients_list.map(ingredient => {
+        return { name: ingredient };
+    });
+
+    const response = await fetch(`${BACKEND_URL}/generate-recipe`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ ingredients })
+    });
+
+    // Ahora estamos esperando a que la promesa se resuelva antes de intentar acceder a los datos
+    const data = await response.json();
+    if (data.recipe) {
+        return data;
+    }
+    return false
+}
 
 
 
-export { getIngredients, getRecipes }
+
+export { getIngredients, getRecipes, generateRecipe, getRecipe }

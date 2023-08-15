@@ -1,4 +1,25 @@
+import { useNavigate } from 'react-router-dom';
+
 const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
+
+const fetchData = async (url, options) => {
+    const response = await fetch(url, options);
+
+    if (response.status === 401 || response.status === 403 || response.status === 405) {
+        localStorage.removeItem('token'); // Remove the invalid token
+        throw new Error('Unauthorized');
+    }
+
+    const data = await response.json();
+    if (!data.data) {
+        throw new Error(data.message || 'Failed to fetch data');
+    }
+
+    return data;
+};
+
+
 
 const getIngredients = async () => {
     const token = localStorage.getItem("token");
@@ -7,23 +28,14 @@ const getIngredients = async () => {
         throw new Error("No token found in localStorage");
     }
 
-    const response = await fetch(`${BACKEND_URL}/ingredients`, {
+    return fetchData(`${BACKEND_URL}/ingredients`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
+            'Authorization': `Bearer ${token}`,
+            'Accept': 'application/json'
         }
     });
-
-    // Ahora estamos esperando a que la promesa se resuelva antes de intentar acceder a los datos
-    const data = await response.json();
-
-    // Cambiado "response.data" por "data.data" ya que "response" es el objeto de respuesta del fetch y no tiene la propiedad "data".
-    if (!data.data) {
-        throw new Error(data.message || "Failed to fetch ingredients");
-    }
-
-    return data;
 }
 
 
@@ -34,26 +46,14 @@ const getRecipes = async () => {
         throw new Error("No token found in localStorage");
     }
 
-
-    const response = await fetch(`${BACKEND_URL}/recipes`, {
+    //fetchData es una funcion que se encarga de hacer el fetch y de manejar los errores
+    return fetchData(`${BACKEND_URL}/recipes`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
         }
     });
-
-    // Ahora estamos esperando a que la promesa se resuelva antes de intentar acceder a los datos
-    const data = await response.json();
-    console.log(data);
-
-    // Cambiado "response.data" por "data.data" ya que "response" es el objeto de respuesta del fetch y no tiene la propiedad "data".
-    if (!data.data) {
-        throw new Error(data.message || "Failed to fetch ingredients");
-    }
-
-    return data;
-
 
 }
 

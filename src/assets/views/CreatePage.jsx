@@ -12,12 +12,21 @@ function CreatePage() {
     const [recipeSlug, setRecipeSlug] = useState(null);
     const [errorMessage, setErrorMessage] = useState("");
     useEffect(() => {
-        getIngredients().then(response => {
-            setIngredients(response.data);
-        }).catch(error => {
-            console.error("Error fetching ingredients:", error);
-        });
-    }, []);
+        const fetchIngredients = async () => {
+            try {
+                const ingredients = await getIngredients();
+                // Handle ingredients
+            } catch (error) {
+                if (error.message === 'Unauthorized') {
+                    navigate('/login'); // Redirect to login page
+                } else {
+                    // Handle other errors
+                }
+            }
+        };
+
+        fetchIngredients();
+    }, [navigate]);
 
     const toggleIngredient = (slug) => {
         if (selectedIngredients.includes(slug)) {

@@ -67,12 +67,11 @@ function CreatePage() {
                     <h2 className="text-2xl font-bold mb-4">Seleccionados:</h2>
                     <ul className="bg-gray-100 p-4 rounded shadow mb-4">
                         {selectedIngredients.map(slug => (
-                            <li key={slug} className="border-b py-2">{slug}</li>
+                            <li key={slug} className="border-b py-2">
+                                {ingredients.find(ingredient => ingredient.slug === slug).name_es}
+                            </li>
                         ))}
                     </ul>
-                    <button onClick={handleGenerateRecipe} className="bg-blue-500 text-white px-6 py-2 rounded hover:bg-blue-600 shadow">
-                        Generar receta
-                    </button>
                 </div>
             </div>
 
@@ -97,6 +96,10 @@ function CreatePage() {
                     </div>
                 </div>
             )}
+            <button onClick={handleGenerateRecipe} className="fixed bottom-8 right-8 bg-blue-500 text-white px-6 py-3 rounded-full shadow-md hover:bg-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-300 transition">
+                <span className="flex items-center justify-center text-lg">Generar</span>
+            </button>
+
         </div>
     );
 }

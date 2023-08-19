@@ -1,15 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../context/AuthContext';
+
 const LoginForm = ({ setForceUpdate }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const { VITE_BACKEND_URL: backendURL } = import.meta.env;
     const navigation = useNavigate();
+    const { login } = useContext(AuthContext); // Aquí estamos usando el contexto de autenticación
 
-    //si user esta logeado, redirigir a home
     if (localStorage.getItem('token')) {
         navigation('/home');
     }
@@ -38,6 +40,8 @@ const LoginForm = ({ setForceUpdate }) => {
                 localStorage.setItem('token', data.token);
                 localStorage.setItem('user', JSON.stringify(data.user));
                 localStorage.setItem('open_ai_token', JSON.stringify(data.open_ai_token));
+                login(data);
+
                 //go to home
                 navigation('/home');
 
@@ -51,6 +55,7 @@ const LoginForm = ({ setForceUpdate }) => {
             toast.error('Hubo un problema al intentar conectar con el servidor.');
         }
     };
+
 
     return (
         <div className="h-full flex items-center justify-center pt-24">

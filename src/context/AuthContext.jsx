@@ -1,7 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
-const AuthContext = createContext();
-
+export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState(() => {
@@ -21,6 +20,12 @@ export const AuthProvider = ({ children }) => {
         };
     }, []);
 
+    const login = (userData) => {
+        localStorage.setItem('token', userData.token);
+        localStorage.setItem('user', JSON.stringify(userData));
+        setCurrentUser(userData);
+    };
+
     const logout = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
@@ -29,6 +34,7 @@ export const AuthProvider = ({ children }) => {
 
     const contextValue = {
         currentUser,
+        login,
         logout
     };
 

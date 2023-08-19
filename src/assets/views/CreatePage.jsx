@@ -66,11 +66,19 @@ function CreatePage() {
                 <div className="md:w-1/4 sticky top-0">
                     <h2 className="text-2xl font-bold mb-4">Seleccionados:</h2>
                     <ul className="bg-gray-100 p-4 rounded shadow mb-4">
-                        {selectedIngredients.map(slug => (
-                            <li key={slug} className="border-b py-2">
-                                {ingredients.find(ingredient => ingredient.slug === slug).name_es}
-                            </li>
-                        ))}
+                        {selectedIngredients.map(slug => {
+                            const ingredient = ingredients.find(ing => ing.slug === slug);
+                            return (
+                                <li key={slug} className="border-b py-2 flex items-center">
+                                    <img
+                                        src={ingredient.image}
+                                        alt={ingredient.name_es}
+                                        className="w-6 h-6 mr-2"
+                                    />
+                                    {ingredient.name_es}
+                                </li>
+                            );
+                        })}
                     </ul>
                 </div>
             </div>

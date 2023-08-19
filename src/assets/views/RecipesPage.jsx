@@ -9,7 +9,7 @@ function RecipeElement({ recipe }) {
                 <h2 className="text-xl font-bold mb-2 text-blue-700">{recipe.name}</h2>
                 <img src={recipe.image} alt={recipe.name} className="w-full h-48 object-cover rounded-lg mb-4" />
                 <h3 className="text-md font-semibold mb-2 text-blue-600">Ingredientes:</h3>
-                <pre className="bg-blue-100 p-2 rounded-lg text-sm text-blue-600">{recipe.quantity}</pre>
+                <p className="bg-blue-100 p-2 rounded-lg text-sm text-blue-600 break-words">{recipe.quantity}</p>
             </div>
         </Link>
     );

@@ -4,8 +4,9 @@ import { toast } from 'react-toastify';
 function SettingsPage() {
     // Obtener datos del usuario desde localStorage
     const storedUser = JSON.parse(localStorage.getItem('user')) || {};
-    const [userName, setUserName] = useState(storedUser.name || "");
-    const [userEmail, setUserEmail] = useState(storedUser.email || "");
+    console.log(storedUser);
+    const [userName, setUserName] = useState(storedUser.user.name || "");
+    const [userEmail, setUserEmail] = useState(storedUser.user.email || "");
     const [token, setToken] = useState('');
     const { VITE_BACKEND_URL: backendURL } = import.meta.env;
     useEffect(() => {

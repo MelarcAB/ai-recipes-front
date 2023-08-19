@@ -1,10 +1,9 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
-
 const LoginForm = ({ setForceUpdate }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -12,9 +11,11 @@ const LoginForm = ({ setForceUpdate }) => {
     const navigation = useNavigate();
     const { login } = useContext(AuthContext); // Aquí estamos usando el contexto de autenticación
 
-    if (localStorage.getItem('token')) {
-        navigation('/home');
-    }
+    useEffect(() => {
+        if (localStorage.getItem('token')) {
+            navigation('/home');
+        }
+    }, [navigation]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -55,6 +56,7 @@ const LoginForm = ({ setForceUpdate }) => {
             toast.error('Hubo un problema al intentar conectar con el servidor.');
         }
     };
+
 
 
     return (

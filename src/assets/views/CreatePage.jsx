@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { getIngredients, generateRecipe } from '../../api/api';
 import CreateElement from '../../components/CreateElement';
 import LoadingRecipe from '../../components/LoadingRecipe';
+import { RestaurantMenu, Person, Build, Logout } from '@mui/icons-material';
 function CreatePage() {
     const navigate = useNavigate();
     const [ingredients, setIngredients] = useState([]);
@@ -105,7 +106,10 @@ function CreatePage() {
                 </div>
             )}
             <button onClick={handleGenerateRecipe} className="fixed bottom-8 right-8 bg-blue-500 text-white px-6 py-3 rounded-full shadow-md hover:bg-blue-600 focus:outline-none focus:ring-4 focus:ring-blue-300 transition">
-                <span className="flex items-center justify-center text-lg">Generar</span>
+                <span className="flex items-center justify-center text-lg">
+                    <RestaurantMenu className="text-2xl text-white mr-2" />
+                    Generar
+                </span>
             </button>
 
         </div>

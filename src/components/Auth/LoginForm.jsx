@@ -61,13 +61,12 @@ const LoginForm = ({ setForceUpdate }) => {
 
     return (
         <div className="h-full flex items-center justify-center pt-24">
-            <div className="w-full max-w-xs">
-                <div className="text-center mb-6">
-                    <h2 className="text-2xl font-bold text-indigo-600">
-                        Bienvenido
-                    </h2>
-                    <p className="text-gray-800">Inicia sesión para generar recetas</p>
-                </div>
+            <div className="w-full max-w-xs text-center">
+                <h2 className="text-2xl font-bold text-indigo-600 mb-2">
+                    Bienvenido
+                </h2>
+                <img src="recetas-min.webp" alt="Logo de la aplicación" className="mx-auto w-1/2 mb-2 rounded-full shadow-md" />
+                <p className="text-gray-800 mb-6">Inicia sesión para generar recetas</p>
                 <form className="bg-white border border-gray-200 rounded-lg shadow-md p-4" onSubmit={handleSubmit}>
                     <div className="mb-3">
                         <label className="block text-gray-800 text-sm font-medium mb-1" htmlFor="email">
@@ -93,6 +92,7 @@ const LoginForm = ({ setForceUpdate }) => {
             </div>
         </div>
     );
+
 
 };
 

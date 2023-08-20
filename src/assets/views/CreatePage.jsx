@@ -12,6 +12,9 @@ function CreatePage() {
     const [recipeGenerated, setRecipeGenerated] = useState(false);
     const [recipeSlug, setRecipeSlug] = useState(null);
     const [errorMessage, setErrorMessage] = useState("");
+    const [recipeType, setRecipeType] = useState("null");
+    const [difficulty, setDifficulty] = useState("facil");
+
     useEffect(() => {
         getIngredients().then(response => {
             setIngredients(response.data);
@@ -31,7 +34,11 @@ function CreatePage() {
     const handleGenerateRecipe = async () => {
         setModalOpen(true);
         try {
-            const response = await generateRecipe(selectedIngredients);
+            const params = {
+                dificultad: difficulty,
+                tipo: recipeType === "null" ? null : recipeType
+            };
+            const response = await generateRecipe(selectedIngredients, params);
             if (response.recipe) {
                 setRecipeGenerated(true);
                 setRecipeSlug(response.recipe.slug);
@@ -53,6 +60,37 @@ function CreatePage() {
     return (
         <div className="p-4">
             <h1 className="text-3xl font-bold mb-6">Ingredientes</h1>
+            <div className="flex flex-row items-center p-4 mb-5 space-x-4  rounded-md">
+                <div className="flex items-center space-x-2">
+                    <label className="text-sm font-bold text-gray-700" htmlFor="recipeType">Tipo de receta:</label>
+                    <select
+                        id="recipeType"
+                        value={recipeType}
+                        onChange={(e) => setRecipeType(e.target.value)}
+                        className="p-2 text-sm bg-white border border-gray-300 rounded-md focus:border-indigo-500 focus:ring-indigo-500"
+                    >
+                        <option value="null">Cualquiera</option>
+                        <option value="saludable">Saludable</option>
+                        <option value="casera">Casera</option>
+                        <option value="rapida">Rápida</option>
+                    </select>
+                </div>
+
+                <div className="flex items-center space-x-2">
+                    <label className="text-sm font-bold text-gray-700" htmlFor="difficulty">Dificultad:</label>
+                    <select
+                        id="difficulty"
+                        value={difficulty}
+                        onChange={(e) => setDifficulty(e.target.value)}
+                        className="p-2 text-sm bg-white border border-gray-300 rounded-md focus:border-indigo-500 focus:ring-indigo-500"
+                    >
+                        <option value="facil">Fácil</option>
+                        <option value="media">Media</option>
+                        <option value="dificil">Difícil</option>
+                    </select>
+                </div>
+            </div>
+
             <div className="flex flex-col md:flex-row md:space-x-6">
                 <div className="flex-grow grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mb-6">
                     {ingredients.map(ingredient => (

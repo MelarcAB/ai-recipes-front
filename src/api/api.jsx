@@ -94,7 +94,7 @@ const getRecipe = async (slug) => {
 }
 
 
-const generateRecipe = async (ingredients_list) => {
+const generateRecipe = async (ingredients_list, params) => {
     const token = localStorage.getItem("token");
     if (!token) {
         throw new Error("No token found in localStorage");
@@ -109,7 +109,7 @@ const generateRecipe = async (ingredients_list) => {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify({ ingredients })
+        body: JSON.stringify({ ingredients, params })
     });
 
     // Ahora estamos esperando a que la promesa se resuelva antes de intentar acceder a los datos
